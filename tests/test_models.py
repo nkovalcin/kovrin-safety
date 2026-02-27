@@ -225,23 +225,17 @@ class TestProofObligation:
         assert po.evidence == ""
 
     def test_frozen_axiom_id(self) -> None:
-        po = ProofObligation(
-            axiom_id=1, axiom_name="Test", description="Desc", passed=True
-        )
+        po = ProofObligation(axiom_id=1, axiom_name="Test", description="Desc", passed=True)
         with pytest.raises(ValidationError):
             po.axiom_id = 2  # type: ignore[misc]
 
     def test_frozen_passed(self) -> None:
-        po = ProofObligation(
-            axiom_id=1, axiom_name="Test", description="Desc", passed=True
-        )
+        po = ProofObligation(axiom_id=1, axiom_name="Test", description="Desc", passed=True)
         with pytest.raises(ValidationError):
             po.passed = False  # type: ignore[misc]
 
     def test_frozen_evidence(self) -> None:
-        po = ProofObligation(
-            axiom_id=1, axiom_name="Test", description="Desc", passed=True
-        )
+        po = ProofObligation(axiom_id=1, axiom_name="Test", description="Desc", passed=True)
         with pytest.raises(ValidationError):
             po.evidence = "new"  # type: ignore[misc]
 
@@ -511,10 +505,7 @@ class TestWatchdogAlert:
         assert alert.rule == "ExcessiveFailureRate"
 
     def test_auto_id_unique(self) -> None:
-        alerts = [
-            WatchdogAlert(severity=ContainmentLevel.WARN, reason="test")
-            for _ in range(50)
-        ]
+        alerts = [WatchdogAlert(severity=ContainmentLevel.WARN, reason="test") for _ in range(50)]
         ids = {a.id for a in alerts}
         assert len(ids) == 50
 

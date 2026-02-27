@@ -794,9 +794,7 @@ class TestHashedTraceModel:
         assert "sequence" in data
 
     def test_json_round_trip(self, log):
-        hashed = log.append(
-            Trace(event_type="RT", risk_level=RiskLevel.MEDIUM, l0_passed=True)
-        )
+        hashed = log.append(Trace(event_type="RT", risk_level=RiskLevel.MEDIUM, l0_passed=True))
         json_str = hashed.model_dump_json()
         restored = HashedTrace.model_validate_json(json_str)
         assert restored.hash == hashed.hash
@@ -823,9 +821,7 @@ class TestEdgeCases:
     """Boundary conditions and safety invariants."""
 
     def test_trace_with_empty_strings(self, log):
-        log.append(
-            Trace(event_type="", description="", intent_id="", task_id="")
-        )
+        log.append(Trace(event_type="", description="", intent_id="", task_id=""))
         assert len(log) == 1
         valid, _ = log.verify_integrity()
         assert valid is True
@@ -849,10 +845,12 @@ class TestEdgeCases:
         assert valid is True
 
     def test_trace_with_special_characters(self, log):
-        log.append(Trace(
-            event_type="SPECIAL",
-            description="Quotes and backslash test",
-        ))
+        log.append(
+            Trace(
+                event_type="SPECIAL",
+                description="Quotes and backslash test",
+            )
+        )
         valid, _ = log.verify_integrity()
         assert valid is True
 
@@ -962,6 +960,7 @@ class TestIsolation:
     def test_separate_chains(self):
         """Same trace appended to two logs produces same hash (identical content)."""
         from datetime import UTC, datetime
+
         fixed_ts = datetime(2026, 1, 1, tzinfo=UTC)
         shared_trace = Trace(id="tr-shared", event_type="SAME", timestamp=fixed_ts)
         log_a = ImmutableTraceLog()

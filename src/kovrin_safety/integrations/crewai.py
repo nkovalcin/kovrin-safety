@@ -70,8 +70,7 @@ def kovrin_guardrail(
             return output, True
         else:
             return (
-                f"Safety check failed: {result.reasoning}. "
-                f"Action required: {result.action.value}",
+                f"Safety check failed: {result.reasoning}. Action required: {result.action.value}",
                 False,
             )
 

@@ -47,8 +47,7 @@ AXIOMS: tuple[Axiom, ...] = (
         id=2,
         name="Harm Floor",
         description=(
-            "No action shall be taken where the expected harm "
-            "exceeds the defined safety threshold."
+            "No action shall be taken where the expected harm exceeds the defined safety threshold."
         ),
         formal="□(∀action: expected_harm(action) < harm_threshold)",
     ),
@@ -56,8 +55,7 @@ AXIOMS: tuple[Axiom, ...] = (
         id=3,
         name="Transparency",
         description=(
-            "All decisions must be traceable to the originating intent. "
-            "No opaque decision-making."
+            "All decisions must be traceable to the originating intent. No opaque decision-making."
         ),
         formal="□(∀decision: ∃intent: traceable_to(decision, intent))",
     ),

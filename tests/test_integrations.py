@@ -153,9 +153,7 @@ class TestKovrinGuardrail:
 
     def test_custom_speculation_tier(self):
         safety = KovrinSafety()
-        guardrail = kovrin_guardrail(
-            safety, risk_level="LOW", speculation_tier="FREE"
-        )
+        guardrail = kovrin_guardrail(safety, risk_level="LOW", speculation_tier="FREE")
         output, passed = guardrail("Safe output")
         assert passed is True
 

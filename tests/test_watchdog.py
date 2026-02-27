@@ -371,15 +371,11 @@ class TestWatchdogMonitor:
     def test_check_event_triggers_kill(self):
         monitor = WatchdogMonitor()
         # First: rejection
-        rejection = _make_hashed(
-            Trace(event_type="L0_CHECK", task_id="t1", l0_passed=False)
-        )
+        rejection = _make_hashed(Trace(event_type="L0_CHECK", task_id="t1", l0_passed=False))
         monitor.check_event(rejection)
 
         # Then: attempted execution after rejection
-        execution = _make_hashed(
-            Trace(event_type="EXECUTION_START", task_id="t1"), seq=1
-        )
+        execution = _make_hashed(Trace(event_type="EXECUTION_START", task_id="t1"), seq=1)
         alerts = monitor.check_event(execution)
         assert len(alerts) > 0
         assert monitor.is_killed
@@ -402,9 +398,7 @@ class TestWatchdogMonitor:
     def test_killed_monitor_ignores_events(self):
         monitor = WatchdogMonitor()
         monitor._killed = True
-        event = _make_hashed(
-            Trace(event_type="EXECUTION_START", task_id="t1")
-        )
+        event = _make_hashed(Trace(event_type="EXECUTION_START", task_id="t1"))
         alerts = monitor.check_event(event)
         assert len(alerts) == 0
 
@@ -432,12 +426,8 @@ class TestWatchdogMonitor:
         await monitor.start(log)
 
         # Append via async — should trigger watchdog
-        await log.append_async(
-            Trace(event_type="L0_CHECK", task_id="t1", l0_passed=False)
-        )
-        await log.append_async(
-            Trace(event_type="EXECUTION_START", task_id="t1")
-        )
+        await log.append_async(Trace(event_type="L0_CHECK", task_id="t1", l0_passed=False))
+        await log.append_async(Trace(event_type="EXECUTION_START", task_id="t1"))
 
         assert monitor.is_killed
         assert len(monitor.alerts) > 0

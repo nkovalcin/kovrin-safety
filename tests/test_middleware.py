@@ -23,9 +23,7 @@ class TestKovrinSafety:
 
     @pytest.mark.asyncio
     async def test_critical_risk_not_approved(self, safety):
-        result = await safety.check(
-            "Deploy to production", risk_level="CRITICAL"
-        )
+        result = await safety.check("Deploy to production", risk_level="CRITICAL")
         assert result.approved is False
         assert result.action == RoutingAction.HUMAN_APPROVAL
 
@@ -105,17 +103,13 @@ class TestProfiles:
     @pytest.mark.asyncio
     async def test_cautious_profile(self):
         safety = KovrinSafety(profile="CAUTIOUS")
-        result = await safety.check(
-            "Process data", risk_level="MEDIUM", speculation_tier="FREE"
-        )
+        result = await safety.check("Process data", risk_level="MEDIUM", speculation_tier="FREE")
         assert result.action == RoutingAction.SANDBOX_REVIEW
 
     @pytest.mark.asyncio
     async def test_aggressive_profile(self):
         safety = KovrinSafety(profile="AGGRESSIVE")
-        result = await safety.check(
-            "Process data", risk_level="HIGH", speculation_tier="FREE"
-        )
+        result = await safety.check("Process data", risk_level="HIGH", speculation_tier="FREE")
         assert result.action == RoutingAction.AUTO_EXECUTE
         assert result.approved is True
 

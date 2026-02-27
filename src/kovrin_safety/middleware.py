@@ -134,9 +134,7 @@ class KovrinSafety:
             intent_id=check_id,
             task_id=check_id,
             event_type="CRITIC_PIPELINE",
-            description=(
-                f"Critics: {'PASSED' if critics_passed else 'REJECTED'} — {action[:60]}"
-            ),
+            description=(f"Critics: {'PASSED' if critics_passed else 'REJECTED'} — {action[:60]}"),
             details={
                 "obligations": [o.model_dump() for o in obligations],
                 "failed": [
@@ -310,7 +308,5 @@ class KovrinSafety:
                 "human_approval": human_count,
             },
             "profile": self._profile.value,
-            "watchdog_alerts": (
-                len(self._watchdog.alerts) if self._watchdog else 0
-            ),
+            "watchdog_alerts": (len(self._watchdog.alerts) if self._watchdog else 0),
         }

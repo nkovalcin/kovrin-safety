@@ -124,17 +124,14 @@ class TestRuleBasedChecker:
 
     @pytest.mark.asyncio
     async def test_multiple_violations(self, checker):
-        obligations = await checker.check(
-            "Disable override and permanently delete all data"
-        )
+        obligations = await checker.check("Disable override and permanently delete all data")
         failed = [o for o in obligations if not o.passed]
         assert len(failed) >= 2
 
     @pytest.mark.asyncio
     async def test_context_included_in_check(self, checker):
         obligations = await checker.check(
-            "Process the request",
-            context="Delete all records from the database"
+            "Process the request", context="Delete all records from the database"
         )
         harm_ob = next(o for o in obligations if o.axiom_name == "Harm Floor")
         assert harm_ob.passed is False

@@ -114,9 +114,7 @@ class KovrinSafetyMiddleware:
 
             raise SafetyBlockedError(
                 f"Action blocked by safety middleware: {result.reasoning}",
-                failed_critics=[
-                    o.axiom_name for o in result.proof_obligations if not o.passed
-                ],
+                failed_critics=[o.axiom_name for o in result.proof_obligations if not o.passed],
             )
 
         # Return NEW dict — never mutate the input state

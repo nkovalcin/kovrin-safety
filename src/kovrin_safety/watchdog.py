@@ -65,8 +65,7 @@ class NoExecutionAfterRejection(TemporalRule):
                 return WatchdogAlert(
                     severity=self.severity,
                     reason=(
-                        f"Task {event.trace.task_id} was rejected by L0 "
-                        "but execution was attempted"
+                        f"Task {event.trace.task_id} was rejected by L0 but execution was attempted"
                     ),
                     task_id=event.trace.task_id,
                     intent_id=event.trace.intent_id,
@@ -129,8 +128,7 @@ class UnexpectedEventSequence(TemporalRule):
         # Rule: EXECUTION_COMPLETE without prior EXECUTION_START for same task
         if event.trace.event_type == "EXECUTION_COMPLETE":
             has_start = any(
-                h.trace.task_id == event.trace.task_id
-                and h.trace.event_type == "EXECUTION_START"
+                h.trace.task_id == event.trace.task_id and h.trace.event_type == "EXECUTION_START"
                 for h in history
             )
             if not has_start:
@@ -348,9 +346,7 @@ class AgentDriftTracker:
         return [self.get_metrics(name) for name in self._data]
 
     @staticmethod
-    def _compute_drift_level(
-        avg_score: float, success_rate: float, sample_size: int
-    ) -> DriftLevel:
+    def _compute_drift_level(avg_score: float, success_rate: float, sample_size: int) -> DriftLevel:
         """Determine drift level from metrics."""
         if sample_size < 3:
             return DriftLevel.NONE
@@ -418,8 +414,7 @@ class AgentCompetencyDrift(TemporalRule):
             return WatchdogAlert(
                 severity=ContainmentLevel.WARN,
                 reason=(
-                    f"Agent '{agent_name}' moderate drift: "
-                    f"avg_prm={metrics.average_prm_score:.2f}"
+                    f"Agent '{agent_name}' moderate drift: avg_prm={metrics.average_prm_score:.2f}"
                 ),
                 task_id=event.trace.task_id,
                 intent_id=event.trace.intent_id,

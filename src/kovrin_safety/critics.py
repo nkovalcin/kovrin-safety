@@ -221,9 +221,7 @@ class PolicyCritic:
             if negation_match:
                 forbidden_phrase = negation_match.group(1).strip().rstrip(".")
                 # Check if any significant words from the forbidden phrase appear in action
-                forbidden_words = [
-                    w for w in forbidden_phrase.split() if len(w) > 3
-                ]
+                forbidden_words = [w for w in forbidden_phrase.split() if len(w) > 3]
                 if forbidden_words and any(w in action_lower for w in forbidden_words):
                     violated.append(constraint)
                 continue
@@ -255,9 +253,7 @@ class PolicyCritic:
             evidence="No constraint violations detected",
         )
 
-    async def _evaluate_with_claude(
-        self, action: str, constraints: list[str]
-    ) -> ProofObligation:
+    async def _evaluate_with_claude(self, action: str, constraints: list[str]) -> ProofObligation:
         """Claude-powered policy evaluation."""
         if not self._client:
             return self._evaluate_rule_based(action, constraints)
@@ -301,10 +297,7 @@ Return ONLY JSON, no other text."""
                 axiom_name="Policy",
                 description="Action complies with organizational constraints",
                 passed=data.get("compliant", False),
-                evidence=(
-                    data.get("reason", "")
-                    + (f" Violated: {violated}" if violated else "")
-                ),
+                evidence=(data.get("reason", "") + (f" Violated: {violated}" if violated else "")),
             )
         except (json.JSONDecodeError, ValueError):
             return ProofObligation(
