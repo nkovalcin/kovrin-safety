@@ -16,7 +16,7 @@ print(result.reasoning)  # "Harm Floor violation: ..."
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
-[![Tests](https://img.shields.io/badge/tests-377%20passed-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/tests-377%20passed-brightgreen-brightgreen.svg)]()
 
 ---
 
@@ -145,6 +145,7 @@ safety = KovrinSafety(anthropic_api_key="sk-ant-...")
 
 ```python
 from kovrin_safety import KovrinSafety
+from kovrin_safety.exceptions import SafetyBlockedError
 from kovrin_safety.integrations.langchain import KovrinSafetyMiddleware
 
 safety = KovrinSafety(profile="CAUTIOUS")
@@ -261,6 +262,7 @@ SafetyResult(
     approved: bool,                          # Can the action proceed?
     action: RoutingAction,                   # AUTO_EXECUTE, SANDBOX_REVIEW, HUMAN_APPROVAL
     risk_level: RiskLevel,                   # LOW, MEDIUM, HIGH, CRITICAL
+    speculation_tier: SpeculationTier,       # FREE, GUARDED, NONE
     proof_obligations: list[ProofObligation], # Evidence from critics
     trace_id: str,                           # Unique check identifier
     reasoning: str,                          # Human-readable explanation
