@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kovrin-safety"
+version = "0.1.0"
+description = "Safety middleware for AI agents — constitutional checks, risk routing, cryptographic audit"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [{ name = "Norbert Kovalčín", email = "norbert@nkovalcin.com" }]
+keywords = ["ai-safety", "agents", "middleware", "constitutional-ai", "audit"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Security",
+]
+dependencies = [
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=0.40.0"]
+langchain = ["langchain-core>=0.3"]
+crewai = ["crewai>=0.80"]
+all = ["kovrin-safety[anthropic,langchain,crewai]"]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.8",
+    "mypy>=1.13",
+]
+
+[project.urls]
+Homepage = "https://kovrin.dev"
+Repository = "https://github.com/nkovalcin/kovrin-safety"
+Documentation = "https://docs.kovrin.dev"
+Issues = "https://github.com/nkovalcin/kovrin-safety/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/kovrin_safety"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
